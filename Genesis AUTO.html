@@ -1,0 +1,109 @@
+<!-- HTML Audio Element -->
+<a href="Genesis.html">[創世記首頁]</a>
+<ul><h3>創世記小品總集</h3></ul>
+
+<audio id="audioPlayer" controls></audio>
+
+<ul><h3>
+<input type="number" id="trackInput" placeholder="請輸入小品前言／內容編號">
+<button onclick="goToTrack()">播放小品前言／內容</button>
+</h3></ul>
+
+<script>
+const titles = [
+  "God's Stewardship Audio",
+  "Cain and Abel Audio",
+  "The Spirit and Life Audio",
+  "The Nephilim Audio",
+  "Noah's Faith Audio",
+  "Noah's Descendants Audio",
+  "The Tower of Babel Audio",
+  "Abram's Faith Audio",
+  "Abram's Earthly Offspring Audio",
+  "Abram's Heavenly Offspring Audio",
+  "God's Covenant Audio",
+  "Ismael and Isaac Audio",
+  "God's Friend Abraham Audio",
+  "Abraham and Abimelech Audio",
+  "The Sonship Audio",
+  "Abraham's Redemption Audio",
+  "Sarah's Death Audio",
+  "Abraham's Last Command Audio",
+  "Isaac's Blessing Audio",
+  "The Family Feud Audio",
+  "Jacob's Dream Audio",
+  "Jacob Meets Rachel Audio",
+  "Jacob's Wives Audio",
+  "Rachel's First Child Audio",
+  "Jacob's rods Audio",
+  "Jacob's Escape Audio",
+  "Mahanaim Audio",
+  "Peniel Audio",
+  "Jacob Meets Esau Audio",
+  "Simeon And Levi Audio",
+  "Jacob's Altar Audio",
+  "Jacob's Sons Audio",
+  "Esau's Descendants Audio",
+  "Joseph's Dreams Audio",
+  "Joseph Being Betrayed Audio",
+  "Judah and Tamar Audio",
+  "Perez and Zerah Audio",
+  "Joseph's Temptation Audio",
+  "The Butler and Baker's Dreams Audio",
+  "Pharaoh's Dreams Audio",
+  "Joseph's Sons Audio",
+  "Joseph Meets His Brothers Audio",
+  "Joseph's Redemption Audio",
+  "Joseph's Restoration Audio",
+  "Judah's Devotion Audio",
+  "Joseph's Reconcilation Audio",
+  "Jacob's Revival Audio",
+  "Jacob's Journey to Egypt Audio",
+  "Israel Blesses Ephraim and Manasseh Audio",
+  "Israel Blesses Four Older Sons Audio",
+  "Israel Blesses Other Sons Audio",
+  "Jacob's last command Audio",
+  "A New Beginning Audio"
+];
+
+const playlist = [];
+titles.forEach(title => {
+  playlist.push(`${title} short.mp3`);
+  playlist.push(`${title}.mp3`);
+});
+
+let currentTrackIndex = 0;
+const player = document.getElementById("audioPlayer");
+
+// Load first track
+player.src = playlist[currentTrackIndex];
+
+// Manual track selection
+function goToTrack() {
+  const input = document.getElementById("trackInput").value;
+  const index = Number(input) - 1;
+
+  if (index >= 0 && index < playlist.length) {
+    currentTrackIndex = index;
+    player.src = playlist[currentTrackIndex];
+    player.play();
+  } else {
+    alert("小品前言／內容編號超出範圍。請輸入一個不大於 106 的數字");
+  }
+}
+
+// Auto-play next track when finished
+player.addEventListener("ended", () => {
+  currentTrackIndex++;
+
+  if (currentTrackIndex < playlist.length) {
+    setTimeout(() => {
+      player.src = playlist[currentTrackIndex];
+      player.play().catch(err => console.log("Playback interaction required:", err));
+    }, 1000);
+  } else {
+    alert("小品前言／內容播放已完成。");
+  }
+});
+</script>
+

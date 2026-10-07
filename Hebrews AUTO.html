@@ -1,0 +1,94 @@
+<!-- HTML Audio Element -->
+<a href="Hebrews.html">[希伯來書首頁]</a>
+<ul><h3>希伯來書小品總集</h3></ul>
+
+<audio id="audioPlayer" controls></audio>
+
+<ul><h3>
+<input type="number" id="trackInput" placeholder="請輸入小品前言／內容編號">
+<button onclick="goToTrack()">播放小品前言／內容</button>
+</h3></ul>
+
+<script>
+const titles = [
+  "The Son Audio",
+  "The New Salvation Audio",
+  "The Man Audio",
+  "The High Priest Audio",
+  "The Builder Audio",
+  "The Believers Audio",
+  "The Rest Audio",
+  "Another Day Audio",
+  "The Word Audio",
+  "The Obedience Audio",
+  "The Maturity Audio",
+  "The Oath Audio",
+  "The Forever Priest Audio",
+  "The New Covenant Audio",
+  "The Holy Places Audio",
+  "The Eternal Heritance Audio",
+  "The Heavenly Things Audio",
+  "The Sanctified Audio",
+  "The Perfected Audio",
+  "The New and Living Way Audio",
+  "The Deliberate Sins Audio",
+  "The Sufferings Audio",
+  "Abel and Enoch - Faith Audio",
+  "Noah and Abraham - The City Audio",
+  "Sarah - The Descendants Audio",
+  "The Heavenly Homeland Audio",
+  "Isaac, Jacob and Joseph - The Heritage Audio",
+  "Moses - The Inheritor Audio",
+  "Jericho and Rahab - The Walk Audio",
+  "Whom the World Was Not Worthy Audio",
+  "The Founder and Perfecter Audio",
+  "The Discipline Audio",
+  "The Fruit Audio",
+  "The Mounts Audio",
+  "The Fire Audio",
+  "The Love Audio",
+  "The Camp Audio",
+  "The Lips Audio",
+  "Amen Audio"
+];
+
+const playlist = [];
+titles.forEach(title => {
+  playlist.push(`${title} short.mp3`);
+  playlist.push(`${title}.mp3`);
+});
+
+let currentTrackIndex = 0;
+const player = document.getElementById("audioPlayer");
+
+// Load first track
+player.src = playlist[currentTrackIndex];
+
+// Manual track selection
+function goToTrack() {
+  const input = document.getElementById("trackInput").value;
+  const index = Number(input) - 1;
+
+  if (index >= 0 && index < playlist.length) {
+    currentTrackIndex = index;
+    player.src = playlist[currentTrackIndex];
+    player.play();
+  } else {
+    alert("小品前言／內容編號超出範圍。請輸入一個不大於 78 的數字");
+  }
+}
+
+// Auto-play next track when finished
+player.addEventListener("ended", () => {
+  currentTrackIndex++;
+
+  if (currentTrackIndex < playlist.length) {
+    setTimeout(() => {
+      player.src = playlist[currentTrackIndex];
+      player.play().catch(err => console.log("Playback interaction required:", err));
+    }, 1000);
+  } else {
+    alert("小品前言／內容播放已完成。");
+  }
+});
+</script>

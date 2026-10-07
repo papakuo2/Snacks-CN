@@ -1,0 +1,102 @@
+<!-- HTML Audio Element -->
+<a href="Exodus.html">[出埃及記首頁]</a>
+<ul><h3>出埃及記小品總集</h3></ul>
+
+<audio id="audioPlayer" controls></audio>
+
+<ul><h3>
+<input type="number" id="trackInput" placeholder="請輸入小品前言／內容編號">
+<button onclick="goToTrack()">播放小品前言／內容</button>
+</h3></ul>
+
+<script>
+const titles = [
+  "Male Children Audio",
+  "The Origin of Moses Audio",
+  "The Burning Bush Audio",
+  "I Am Who I Am Audio",
+  "Go Back to Egypt Audio",
+  "Making Bricks Audio",
+  "The Lord Audio",
+  "The Salvation Audio",
+  "The Water Turned to Blood Plague Audio",
+  "The Frog, Gnat and Fly Plagues Audio",
+  "The Death on Livestock and Boil Plagues Audio",
+  "The Hail Plague Audio",
+  "The Locust and Darkness Plagues Audio",
+  "The Final Plague Warning Audio",
+  "The Passover Audio",
+  "The Tenth Plague and Exodus Audio",
+  "Crossing the Red Sea Audio",
+  "Bitter Water Became Sweet Audio",
+  "Manna Audio",
+  "The Lord is My Banner Audio",
+  "Jethro Audio",
+  "Mount Sinai Audio",
+  "The Ten Commandments Audio",
+  "Laws And Restitution Audio",
+  "The Laws for Theft and Adultery Audio",
+  "The Laws for Neighbors Audio",
+  "The Laws for Justice and Sabbath Audio",
+  "The Laws for Worshipping God Audio",
+  "The Covenant Audio",
+  "The Sanctuary Audio",
+  "The Furniture Audio",
+  "The Tabernacle Audio",
+  "The Most Holy Place Audio",
+  "The Altar Audio",
+  "The Court and Oil Audio",
+  "The Garments Audio",
+  "The Consecration Audio",
+  "The Altar of Incense and Census Audio",
+  "The Basin, Anointing Oil and Incense Audio",
+  "Bezalel, Oholiab and the Sabbath Audio",
+  "The Golden Calf Audio",
+  "Moses' Intercession Audio",
+  "The Renewed Covenant Audio",
+  "Contribution for the Tabernacle Audio",
+  "Building the Tabernacle Audio",
+  "The Priestly Garments Audio",
+  "The Completion of the Tabernacle Audio"
+];
+
+const playlist = [];
+titles.forEach(title => {
+  playlist.push(`${title} short.mp3`);
+  playlist.push(`${title}.mp3`);
+});
+
+let currentTrackIndex = 0;
+const player = document.getElementById("audioPlayer");
+
+// Load first track
+player.src = playlist[currentTrackIndex];
+
+// Manual track selection
+function goToTrack() {
+  const input = document.getElementById("trackInput").value;
+  const index = Number(input) - 1;
+
+  if (index >= 0 && index < playlist.length) {
+    currentTrackIndex = index;
+    player.src = playlist[currentTrackIndex];
+    player.play();
+  } else {
+    alert("小品前言／內容編號超出範圍。請輸入一個不大於 94 的數字");
+  }
+}
+
+// Auto-play next track when finished
+player.addEventListener("ended", () => {
+  currentTrackIndex++;
+
+  if (currentTrackIndex < playlist.length) {
+    setTimeout(() => {
+      player.src = playlist[currentTrackIndex];
+      player.play().catch(err => console.log("Playback interaction required:", err));
+    }, 1000);
+  } else {
+    alert("小品前言／內容播放已完成。");
+  }
+});
+</script>
